@@ -20,8 +20,8 @@ public class user {
     public static final String TABLE_NAME = "user";
  
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id" , unique = true )
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "username", length = 100, nullable = false, unique = true )
@@ -30,15 +30,13 @@ public class user {
     @Size(groups = CreateUser.class, min=2, max=100)
     private String username;
 
+    @Column(name ="password", length = 60, nullable = false)
     @JsonProperty(access = Access.WRITE_ONLY)
     @NotNull(groups = {CreateUser.class, UpdateUser.class})
     @NotEmpty(groups = {CreateUser.class, UpdateUser.class})
     @Size(groups = {CreateUser.class, UpdateUser.class}, min=8, max=60)
-    @Column(name ="password", length = 60, nullable = false)
     private String password;
-
-    //private List<Taks> tasks = new ArrayList<Taks>{};
-
+    
 
     public user() {
     }
