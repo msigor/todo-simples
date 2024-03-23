@@ -1,5 +1,8 @@
 package com.igormsantos.todosimples.Models;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
@@ -8,15 +11,16 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 @Entity
-@Table(name = user.TABLE_NAME)
+@Table(name = User.TABLE_NAME)
 
-public class user {
+public class User {
     public static final String TABLE_NAME = "user";
  
     @Id
@@ -37,18 +41,22 @@ public class user {
     @Size(groups = {CreateUser.class, UpdateUser.class}, min=8, max=60)
     private String password;
     
+    @OneToMany(mappedBy = "user")
 
-    public user() {
+    private List<Task> tasks = new ArrayList<Task>();
+
+    public User() {
     }
 
 
-    public user(Long id, String username, String password) {
+    public User(Long id, String username, String password) {
         this.id = id;
         this.username = username;
         this.password = password;
     }
 
 
+    //Getters and setters User
     public Long getId() {
         return this.id;
     }
@@ -74,6 +82,8 @@ public class user {
     }
 
 
+
+        
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -93,7 +103,7 @@ public class user {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        user other = (user) obj;
+        User other = (User) obj;
         if (id == null) {
             if (other.id != null)
                 return false;
@@ -110,6 +120,22 @@ public class user {
         } else if (!password.equals(other.password))
             return false;
         return true;
+    }
+
+
+    //Getters and setters Tasks
+    public static String getTableName() {
+        return TABLE_NAME;
+    }
+
+
+    public List<Task> getTasks() {
+        return tasks;
+    }
+
+
+    public void setTasks(List<Task> tasks) {
+        this.tasks = tasks;
     }
 
     
